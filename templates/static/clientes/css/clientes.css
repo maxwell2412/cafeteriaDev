@@ -1,0 +1,42 @@
+.card-dashboard{
+
+    background-color: var(--main-color);
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+
+}
+.card-dashboard:hover{
+
+    background-color: rgb(117, 0, 20);
+}
+.text-card{
+
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+.btn-add-pedidos{
+
+    background-color: var(--contrast-color);
+    padding: 5px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.btn-principal{
+    color:white;
+    border: none;
+    background-color: var(--dark-color);
+    padding: 5px;
+    font-size: 30px;
+}
+
+#att_cliente {
+    display: None;
+}
