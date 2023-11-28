@@ -1,8 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block 'head' %}
     <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+    <script>
+        function executar(){
+            cliente = document.getElementById('cliente_select')
+            csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+            console.log(csrf_token)
+            id_cliente = cliente.value
+            data = new FormData()
+            data.append('id_cliente', id_cliente)
+            fetch("/clientes/atualiza_cliente/", {
+                method: "POST", 
+                headers:{
+                    'X-CSRFToken':csrf_token,
+                },
+                body: data
+            }).then(function(result){
+                return result.json()
+            }).then(function(data){
+                console.log(data)
+            })
+        }
+    </script>
+
 {% endblock %}
 
 {% block 'dashboard' %}
@@ -68,7 +89,19 @@
             
         </div>
         <div id="att_cliente">
-            teste
+            <p></p>
+
+                <select onchange="executar()" id="cliente_select" class="form-control">
+
+                    {% for cliente in clientes %}
+
+                        <option value="{{ cliente.id }}">
+                            {{ cliente.nome }}
+                        </option>
+
+                    {% endfor %}
+                </select>
+            
         </div>
     </div>
     <script src="{% static 'clientes/js/cliente.js' %}"></script>

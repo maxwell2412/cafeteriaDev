@@ -6,8 +6,8 @@ function add_pedido(){
 
     container.innerHTML += html
 
-
 }
+
 
 function exibir_form(tipo){
     add_cliente = document.getElementById('adicionar-cliente')
@@ -23,3 +23,4 @@ function exibir_form(tipo){
     }
 }
 }
+
