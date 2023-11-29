@@ -12,7 +12,7 @@ class Cliente(models.Model):
 class Cafe(models.Model):
     pedido =  models.CharField(max_length=50)
     tamanho = models.CharField(max_length=3)
-    mesa = models.CharField(max_length=3)
+    mesa = models.IntegerField()
     
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     

@@ -19,7 +19,39 @@
             }).then(function(result){
                 return result.json()
             }).then(function(data){
-                console.log(data)
+                document.getElementById('att_cliente').style.display = 'block'
+                nome = document.getElementById('nome')
+                nome.value = data['cliente']['nome']
+                sobrenome = document.getElementById('sobrenome')
+                sobrenome.value = data['cliente']['sobrenome']
+                email = document.getElementById('email')
+                email.value = data['cliente']['email']
+                cpf = document.getElementById('cpf')
+                cpf.value = data['cliente']['cpf']
+
+                //console.log(data)
+                div_cafes = document.getElementById('cafes')
+                div_cafes.innerHTML = ""
+                for(i=0; i < data['cafe'].length; i++){
+                    console.log(data['cafe'][i]['fields']['pedido'])
+
+                    div_cafes.innerHTML += "<form action='/clientes/update_cafe/"+data['cafe'][i]['id'] +"' method='POST'>\
+                        <div class='row'>\
+                            <div class='col-md'>\
+                                <input class='form-control' type='text' name='pedido' value='" +data['cafe'][i]['fields']['pedido']+ "'>\
+                            </div>\
+                            <div class='col-md'>\
+                                <input type='text' name='tamanho' value='" +data['cafe'][i]['fields']['tamanho']+ "'>\
+                            </div>\
+                            <div class='col-md'>\
+                                <input type='text' name='mesa' value='" +data['cafe'][i]['fields']['mesa']+ "'>\
+                            </div>\
+                            <div class='col-md'>\
+                                <input class ='btn-success' type='submit' value='    Salvar    '>\
+                            </div>\
+                    </div><br>"
+                }
+               
             })
         }
     </script>
@@ -101,6 +133,23 @@
 
                     {% endfor %}
                 </select>
+                <br>
+                <hr>
+                <div id="form-att-cliente">
+                    <p>Nome</p>
+                    <input id="nome" type="text" class="form-control">
+                    <p>Sobrenome</p>
+                    <input id="sobrenome" type="text" class="form-control">
+                    <p>email</p>
+                    <input id="email" type="email" class="form-control">
+                    <p>CPF</p>
+                    <input id="cpf" type="text" class="form-control">
+                    <hr>
+                    <h3>Cafes</h3>
+                    <div id="cafes">
+
+                    </div>
+                </div>
             
         </div>
     </div>
