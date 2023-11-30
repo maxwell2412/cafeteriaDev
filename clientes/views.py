@@ -5,6 +5,9 @@ import re
 from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.shortcuts import redirect, get_object_or_404
+
 
 def clientes(request):
     if request.method == 'GET':
@@ -45,12 +48,13 @@ def att_cliente(request):
     cafe = Cafe.objects.filter(cliente=cliente[0])
     
     cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
-    cafe_json = json.loads(serializers.serialize('json', cafe))
-    print(cafe_json)
     
+    cliente_id = json.loads(serializers.serialize('json', cliente))[0]['pk']
+    print(cliente_id)
+    cafe_json = json.loads(serializers.serialize('json', cafe))
     cafe_json = [{'fields': peds['fields'], 'id': peds['pk']}  for peds in cafe_json]
 
-    data = {'cliente': cliente_json, 'cafe':cafe_json}
+    data = {'cliente': cliente_json, 'cafe':cafe_json, 'cliente_id':cliente_id}
     #print(data)
     
     return JsonResponse(data)
@@ -59,5 +63,42 @@ def update_cafe(request, id):
     nome_cafe = request.POST.get('pedido')
     tamanho = request.POST.get('tamanho')
     mesa = request.POST.get('mesa')
+    cafe = Cafe.objects.get(id=id)
+    list_cafe = Cafe.objects.filter(mesa=mesa).exclude(id=id)
+    if list_cafe.exists():
+        return HttpResponse('Mesa ja ocupada! ')
+    cafe.pedido = nome_cafe
+    cafe.tamnaho = tamanho
+    cafe.mesa = mesa
+    cafe.save()
     
-    return HttpResponse(nome_cafe)
+    return HttpResponse(id)
+
+def excluir_cafe(request, id):
+    try:
+        cafe = Cafe.objects.get(id=id)
+        cafe.delete()
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
+    except:
+        #TODO: Exibir mensagem de erro
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
+
+def update_cliente(request, id):
+    body = json.loads(request.body)
+    print(body)
+    nome = body['nome']
+    sobrenome = body['sobrenome']
+    email = body['email']
+    cpf = body['cpf']
+    
+    cliente = get_object_or_404(Cliente, id=id)
+    try:
+        cliente.nome=nome
+        cliente.sobrenome=sobrenome
+        cliente.email=email
+        cliente.cpf=cpf
+        cliente.save()
+        return JsonResponse({'status':'200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})
+    except:
+        return JsonResponse({'status': '500'})
+ 
