@@ -6,7 +6,7 @@ class CategoriaAdicao(models.Model):
 	titulo = models.CharField(max_length=3, choices=ChoiceCategoriaAdicao.choices)
 	preco = models.DecimalField(max_digits=8, decimal_places=2)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.titulo
 class Servico(models.Model):
 	titulo = models.CharField(max_length=30)
