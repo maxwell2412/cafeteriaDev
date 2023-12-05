@@ -1,7 +1,8 @@
 from django.db import models
 from clientes.models import Cliente
 from .choices import ChoiceCategoriaAdicao
-class CategoriaAdicao():
+
+class CategoriaAdicao(models.Model):
 	titulo = models.CharField(max_length=3, choices=ChoiceCategoriaAdicao.choices)
 	preco = models.DecimalField(max_digits=8, decimal_places=2)
 	
