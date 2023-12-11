@@ -22,6 +22,6 @@ def lista_servico(request):
         return render(request, 'lista_servico.html', {'servicos': servicos})
         #return render(request, 'lista_servico.html')
     
-def servico(request, protocolo):
-    servico = Servico.objects.get(protecolo = protocolo)
-    return(HttpResponse)
+def servico(request, identificador):
+    servico = get_object_or_404(Servico, identificador=identificador )
+    return render(request, 'servico.html', {'servico': servico})
