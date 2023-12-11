@@ -4,12 +4,13 @@
 
 {% block head %}
     <link rel"stylesheet" href="{% static 'cliente/css/clientes.css' %}">
+    <link rel"stylesheet" href="{% static 'servicos/css/lista_servico.css' %}">
 {% endblock %}
 
 {% block 'dashboard' %}
 <br>
 <br>
-    <div class="container">
+    <div class="container-fluid distanciamento">
         <table class="table table-dark table-striped-columns">
             <thead>
               <tr>
@@ -33,7 +34,7 @@
                             <span class="badge badge-info">Em processo</span>
                         {% endif%}
                     </td>
-                    <td>{{servico.preco_total}}</td>
+                    <td>R$ {{servico.preco_total}}</td>
                 </tr>
             {% endfor %}
                 </tbody>

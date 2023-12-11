@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import FormServico
 from django.http import HttpResponse
 from .models import Servico
+
 def novo_servico(request):
     if request.method == "GET":
         form = FormServico()
@@ -21,3 +22,6 @@ def lista_servico(request):
         return render(request, 'lista_servico.html', {'servicos': servicos})
         #return render(request, 'lista_servico.html')
     
+def servico(request, protocolo):
+    servico = Servico.objects.get(protecolo = protocolo)
+    return(HttpResponse)
