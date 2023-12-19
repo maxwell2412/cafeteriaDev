@@ -5,6 +5,7 @@ venv/*.exe
 env/
 **/venv
 **/env
+fpdf/*.*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
